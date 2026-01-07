@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PreçoBomJá | Preços bons agora. Aproveite.</title>
+	<link rel="manifest" href="/manifest.json">
+
     
     <!-- SEO -->
     <meta name="description" content="PreçoBomJá reúne promoções reais com preço bom agora. Ofertas atualizadas, estoque limitado e links oficiais.">
@@ -260,6 +262,10 @@
             </nav>
         </div>
     </header>
+	<button id="installApp" style="display:none;">
+  📲 Instalar o app PreçoBomJá
+</button>
+
     
     <section class="hero">
         <div class="hero-inner">
@@ -350,5 +356,21 @@
             </span>
         </div>
     </footer>
+	<script>
+let deferredPrompt;
+const installBtn = document.getElementById('installApp');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+});
+
+installBtn.addEventListener('click', () => {
+  installBtn.style.display = 'none';
+  deferredPrompt.prompt();
+});
+</script>
+
 </body>
 </html>
