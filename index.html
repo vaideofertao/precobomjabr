@@ -15,241 +15,286 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --red: #C4161C;
-            --yellow: #F2B705;
-            --black: #1C1C1C;
-            --gray: #666;
-            --bg: #F6F7F9;
-            --white: #FFFFFF;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--black);
-            line-height: 1.6;
-        }
-        
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        /* =====================
-           HEADER
-        ===================== */
-        header {
-            background: var(--red);
-            color: var(--white);
-            padding: 14px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        .header-wrap {
-            max-width: 1300px;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 800;
-        }
-        
-        .logo span {
-            color: var(--yellow);
-        }
-        
-        /* OCULTAR MENU NO HEADER (fase inicial) */
-        header nav {
-            display: none;
-        }
-        
-        nav a {
-            margin-left: 20px;
-            font-weight: 600;
-            font-size: .95rem;
-        }
-        
-        /* =====================
-           HERO (FULL WIDTH)
-        ===================== */
-        .hero {
-            width: 100%;
-            background: linear-gradient(135deg, var(--red), #9f1014);
-            color: var(--white);
-            padding: 70px 0;
-        }
-        
-        .hero-inner {
-            max-width: 1300px;
-            margin: auto;
-            padding: 0 20px;
-            display: grid;
-            gap: 24px;
-        }
-        
-        .hero h1 {
-            font-size: 2.2rem;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1.05rem;
-            opacity: .95;
-        }
-        
-        /* OCULTAR CTA DO HERO (fase inicial) */
-        .hero .cta {
-            display: none;
-        }
-        
-        /* =====================
-           SECTION
-        ===================== */
-        section {
-            max-width: 1300px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
-        section h2 {
-            font-size: 1.5rem;
-            margin-bottom: 24px;
-        }
-        
-        /* =====================
-           PRODUCTS GRID
-        ===================== */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
-        }
-        
-        @media (max-width: 1200px) {
-            .grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        @media (max-width: 900px) {
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .card {
-            background: var(--white);
-            border-radius: 8px;
-            padding: 14px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, .06);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .card img {
-            width: 100%;
-            border-radius: 6px;
-        }
-        
-        .badge {
-            background: var(--red);
-            color: var(--white);
-            padding: 4px 8px;
-            font-size: .7rem;
-            font-weight: 700;
-            border-radius: 4px;
-            width: max-content;
-        }
-        
-        .card strong {
-            font-size: .95rem;
-            line-height: 1.3;
-        }
-        
-        .price-old {
-            text-decoration: line-through;
-            color: var(--gray);
-            font-size: .85rem;
-        }
-        
-        .price {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--red);
-        }
-        
-        .buy {
-            margin-top: auto;
-            background: var(--yellow);
-            padding: 12px;
-            text-align: center;
-            font-weight: 800;
-            border-radius: 6px;
-        }
-        
-        .urgency {
-            font-size: .75rem;
-            color: var(--gray);
-        }
-        
-        /* =====================
-           TRUST
-        ===================== */
-        .trust {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            text-align: center;
-        }
-        
-        .trust div {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, .05);
-        }
-        
-        /* =====================
-           FOOTER
-        ===================== */
-        footer {
-            background: #111;
-            color: #ccc;
-            padding: 30px 20px;
-            margin-top: 60px;
-        }
-        
-        footer .inner {
-            text-align: center;
-            font-size: .85rem;
-            color: #aaa;
-        }
-        
-        footer strong {
-            color: #fff;
-            font-weight: 700;
-        }
-    </style>
+/* =====================
+   VARIABLES
+===================== */
+:root {
+  --red: #C4161C;
+  --yellow: #F2B705;
+  --black: #1C1C1C;
+  --gray: #666;
+  --bg: #F6F7F9;
+  --white: #FFFFFF;
+}
+
+/* =====================
+   RESET
+===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--black);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =====================
+   HEADER
+===================== */
+header {
+  background: var(--red);
+  color: var(--white);
+  padding: 14px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-wrap {
+  max-width: 1300px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.logo span {
+  color: var(--yellow);
+}
+
+/* Menu oculto (fase inicial) */
+header nav {
+  display: none;
+}
+
+/* =====================
+   PWA INSTALL BANNER
+===================== */
+#installAppWrapper {
+  position: sticky;
+  top: 60px; /* abaixo do header */
+  z-index: 90;
+  padding: 10px 20px;
+}
+
+#installApp {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #FFD700, #F2B705);
+  color: #111;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+#installApp:hover {
+  filter: brightness(0.95);
+}
+
+#installApp:active {
+  transform: scale(0.97);
+}
+
+.install-icon {
+  font-size: 28px;
+}
+
+.install-text strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.install-text small {
+  display: block;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* =====================
+   HERO
+===================== */
+.hero {
+  width: 100%;
+  background: linear-gradient(135deg, var(--red), #9f1014);
+  color: var(--white);
+  padding: 70px 0;
+}
+
+.hero-inner {
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 20px;
+  display: grid;
+  gap: 24px;
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  line-height: 1.2;
+}
+
+.hero p {
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+/* CTA oculto por enquanto */
+.hero .cta {
+  display: none;
+}
+
+/* =====================
+   SECTION
+===================== */
+section {
+  max-width: 1300px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+}
+
+/* =====================
+   PRODUCTS GRID
+===================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1200px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.badge {
+  background: var(--red);
+  color: var(--white);
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 4px;
+  width: max-content;
+}
+
+.card strong {
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.price-old {
+  text-decoration: line-through;
+  color: var(--gray);
+  font-size: 0.85rem;
+}
+
+.price {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--red);
+}
+
+.buy {
+  margin-top: auto;
+  background: var(--yellow);
+  padding: 12px;
+  text-align: center;
+  font-weight: 800;
+  border-radius: 6px;
+}
+
+.urgency {
+  font-size: 0.75rem;
+  color: var(--gray);
+}
+
+/* =====================
+   TRUST
+===================== */
+.trust {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  text-align: center;
+}
+
+.trust div {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+/* =====================
+   FOOTER
+===================== */
+footer {
+  background: #111;
+  color: #ccc;
+  padding: 30px 20px;
+  margin-top: 60px;
+}
+
+footer .inner {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+footer strong {
+  color: #fff;
+  font-weight: 700;
+}
+</style>
+
 </head>
 <body>
     <header>
@@ -262,9 +307,16 @@
             </nav>
         </div>
     </header>
-	<button id="installApp" style="display:none;">
-  📲 Instalar o app PreçoBomJá
-</button>
+	<div id="installAppWrapper" style="display:none;">
+  <button id="installApp">
+    <span class="install-icon">📲</span>
+    <span class="install-text">
+      <strong>Instalar o app PreçoBomJá</strong>
+      <small>Acesse ofertas mais rápido e sem anúncios</small>
+    </span>
+  </button>
+</div>
+
 
     
     <section class="hero">
@@ -363,7 +415,7 @@ const installBtn = document.getElementById('installApp');
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  installBtn.style.display = 'block';
+  document.getElementById('installAppWrapper').style.display = 'block';
 });
 
 installBtn.addEventListener('click', () => {
