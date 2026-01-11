@@ -390,6 +390,10 @@
               .grid { grid-template-columns: 1fr; }
             }
             
+            /* =====================
+               SOLUÇÃO 1 - IMAGENS RESPONSIVAS
+               (Container flexível com altura mínima)
+            ===================== */
             .card {
               background: var(--white);
               border-radius: 8px;
@@ -399,6 +403,7 @@
               flex-direction: column;
               gap: 8px;
               transition: all 0.3s ease;
+              position: relative;
             }
             
             .card:hover {
@@ -406,11 +411,70 @@
               box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             }
             
-            .card img {
+            /* Container para a imagem */
+            .product-image-container {
               width: 100%;
+              min-height: 180px; /* Altura mínima */
+              max-height: 220px; /* Altura máxima */
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background-color: #f8f9fa;
               border-radius: 6px;
-              height: 180px;
-              object-fit: cover;
+              margin-bottom: 10px;
+              overflow: hidden;
+              position: relative;
+            }
+            
+            /* A imagem dentro do container */
+            .product-image-container img {
+              width: 100%;
+              height: auto;
+              max-height: 100%;
+              object-fit: contain;
+              display: block;
+            }
+            
+            /* Efeito de zoom no hover */
+            .card:hover .product-image-container img {
+              transform: scale(1.05);
+              transition: transform 0.3s ease;
+            }
+            
+            /* =====================
+               AJUSTES RESPONSIVOS PARA AS IMAGENS
+            ===================== */
+            
+            /* Mobile muito pequeno */
+            @media (max-width: 480px) {
+              .product-image-container {
+                min-height: 160px;
+                max-height: 200px;
+              }
+            }
+            
+            /* Tablet */
+            @media (min-width: 601px) and (max-width: 900px) {
+              .product-image-container {
+                min-height: 190px;
+                max-height: 240px;
+              }
+            }
+            
+            /* Desktop médio */
+            @media (min-width: 901px) and (max-width: 1200px) {
+              .product-image-container {
+                min-height: 180px;
+                max-height: 220px;
+              }
+            }
+            
+            /* Desktop grande */
+            @media (min-width: 1201px) {
+              .product-image-container {
+                min-height: 180px;
+                max-height: 220px;
+              }
             }
             
             /* BADGE - EM LARANJA */
@@ -425,6 +489,10 @@
               display: flex;
               align-items: center;
               gap: 4px;
+              position: absolute;
+              top: 20px;
+              left: 20px;
+              z-index: 10;
             }
             
             .badge .badge-icon {
@@ -436,6 +504,7 @@
             .card strong {
               font-size: 0.95rem;
               line-height: 1.3;
+              margin-top: 10px;
             }
             
             .price-old {
@@ -525,6 +594,36 @@
               }
               .filters-mobile.show {
                 display: block;
+              }
+            }
+            
+            /* =====================
+               AJUSTES ADICIONAIS PARA MELHOR RESPONSIVIDADE
+            ===================== */
+            @media (max-width: 600px) {
+              .grid { 
+                gap: 20px; /* Mais espaço entre os cards */
+              }
+              
+              .card {
+                padding: 16px;
+                gap: 12px;
+              }
+              
+              .card strong {
+                font-size: 1rem;
+                height: auto; /* Remove altura fixa */
+                min-height: 3em; /* Altura mínima para uniformidade */
+                display: block;
+              }
+              
+              .price {
+                font-size: 1.4rem; /* Um pouco maior para destaque */
+              }
+              
+              .badge {
+                top: 22px;
+                left: 22px;
               }
             }
             
@@ -876,640 +975,610 @@
                 <strong id="totalCount">30</strong>produtos</div>
         </section>
         <!-- SEÇÃO DE PRODUTOS -->
-        <section>
-            <div class="grid" id="productsGrid">
-                <!-- PRODUTO 1 -->
-                <div class="card" data-categories="utensilios">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/vGrEoCdgYb5peryKRTGFryoKy.png" alt="Panela de Pressão Panelux 4,5L Alumínio Polido">
-                    <strong>Panela de Pressão Panelux 4,5L Alumínio Polido</strong>
-                    <span class="price-old">R$ 71,42</span>
-                    <span class="price">R$ 50,57</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta por tempo limitado</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1bkHDF6">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 2 -->
-                <div class="card" data-categories="utensilios">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/zgm3UBobpoajJNeuYBtFbZyNu.png" alt="Marmita Elétrica Portátil 1,5L Carro e Casa">
-                    <strong>Marmita Elétrica Portátil 1,5L Carro e Casa</strong>
-                    <span class="price-old">R$ 68,36</span>
-                    <span class="price">R$ 53,32</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Pouquíssimas unidades</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1R5kEvA">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 3 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/e8Cr9WqNwCVvLfhuFUcxft3WN.png" alt="Balança de Cozinha Inox 10kg Alta Precisão">
-                    <strong>Balança de Cozinha Inox 10kg Alta Precisão</strong>
-                    <span class="price-old">R$ 54,90</span>
-                    <span class="price">R$ 26,90</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta especial</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2UBNj9V">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 4 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/bNuB8ae9XV15g5mbzxzYLokeB.png" alt="Liquidificador Daily Philips Walita Preto, 550W, 110v">
-                    <strong>Liquidificador Daily Philips Walita Preto, 550W, 110v</strong>
-                    <span class="price-old">R$ 159,90</span>
-                    <span class="price">R$ 80,10</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oportunidade!!!</span>
-                    <a class="buy" href="https://amzn.to/450Hy1B">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 5 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/msrPKkHbeeYRMs7KW5eoNPmQb.png" alt="Agratto, 783, Chaleira Elétrica, 127v, Preto/Inox">
-                    <strong>Agratto, 783, Chaleira Elétrica, 127v, Preto/Inox</strong>
-                    <span class="price-old">R$ 69,90</span>
-                    <span class="price">R$ 51,90</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Super Oferta!</span>
-                    <a class="buy" href="https://amzn.to/4ponFsv">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 6 -->
-                <div class="card" data-categories="utensilios">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/TvAC58xd8UnJ5Jpr77GDkAYVX.png" alt="Frigideira Cerâmica Premium 24cm – Indução &amp; Gás">
-                    <strong>Frigideira Cerâmica Premium 24cm – Indução &amp; Gás</strong>
-                    <span class="price-old">R$ 78,99</span>
-                    <span class="price">R$ 58,99</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 25% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1hkBGBi">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 7 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/pcV3opuHHiGNxVAoKvCJ1mdKb.png" alt="Forno Elétrico Mondial 52L Grand Family II">
-                    <strong>Forno Elétrico Mondial 52L Grand Family II</strong>
-                    <span class="price-old">R$ 699,90</span>
-                    <span class="price">R$ 399,00</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 42% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2MshTdT">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 8 -->
-                <div class="card" data-categories="beleza">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/gCvfa4czduAdnmAFT0RAke0wE.png" alt="Aparador Mondial Super Groom 10">
-                    <strong>Aparador Mondial Super Groom 10</strong>
-                    <span class="price-old">R$ 202,90</span>
-                    <span class="price">R$ 110,45</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 45% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1MrhJKV">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 9 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/KC6KtRR6VhnvKNwvwJECx6r2u.png" alt="Ferro Electrolux Efficient Vapor ESI10">
-                    <strong>Ferro Electrolux Efficient Vapor ESI10</strong>
-                    <span class="price-old">R$ 109,99</span>
-                    <span class="price">R$ 89,90</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 18% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1MrhJKV">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 10 -->
-                <div class="card" data-categories="bemestar">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/A83fFary05MYi1ENJUrBw7n3y.png" alt="Principia Kit Limpeza + Protetor FPS 60">
-                    <strong>Principia Kit Limpeza + Protetor FPS 60</strong>
-                    <span class="price-old">R$ 93,00</span>
-                    <span class="price">R$ 79,05</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 15% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2zQHutu">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 11 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/wGNPxYuywwZgEjkhcfman5wx0.png" alt="Micro-ondas Electrolux 20L Branco – Tira Odor">
-                    <strong>Micro-ondas Electrolux 20L Branco – Tira Odor</strong>
-                    <span class="price-old">R$ 649,00</span>
-                    <span class="price">R$ 483,55</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 25% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1Tsyqt6">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 12 -->
-                <div class="card" data-categories="utensilios">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/KZ4J48wxtwPFiFbgwzqe2qXTp.png" alt="Jogo de Panelas Cerâmica 10 Peças – Indução">
-                    <strong>Jogo de Panelas Cerâmica 10 Peças – Indução</strong>
-                    <span class="price-old">R$ 399,99</span>
-                    <span class="price">R$ 290,58</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 27% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/13vjoat">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 13 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/QvijmgV0Pw4wx6w2vyDtzb1nf.png" alt="Ventilador WAP Flow Turbo 50cm 2 em 1 - 8 pás">
-                    <strong>Ventilador WAP Flow Turbo 50cm 2 em 1 - 8 pás</strong>
-                    <span class="price-old">R$ 269,90</span>
-                    <span class="price">R$ 179,00</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 33% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2ppaoon">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 14 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/yMvvyrBUMLe24p0NkJoG5YvDQ.png" alt="Aspirador WAP High Speed Plus 3 em 1">
-                    <strong>Aspirador WAP High Speed Plus 3 em 1</strong>
-                    <span class="price-old">R$ 207,00</span>
-                    <span class="price">R$ 139,90</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 32% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1x397ya">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 15 -->
-                <div class="card" data-categories="bemestar">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/qozny1pmnz5bHeNtgAu4fYKk3.png" alt="Purificador Electrolux PE12G Compacto">
-                    <strong>Purificador Electrolux PE12G Compacto</strong>
-                    <span class="price-old">R$ 769,00</span>
-                    <span class="price">R$ 582,00</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 24% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2vnkrFi">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 16 -->
-                <div class="card" data-categories="bemestar">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/AzM96RvsoKxbB9bsyMiHB8qYW.png" alt="Piscina Inflável Mor Fun 1400L">
-                    <strong>Piscina Inflável Mor Fun 1400L</strong>
-                    <span class="price-old">R$ 279,00</span>
-                    <span class="price">R$ 159,90</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 42% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2DnSCjq">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 17 -->
-                <div class="card" data-categories="bemestar">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/A0LB1zYh5PtZNqsVpy5ZaQw2W.png" alt="Protetor Solar Sundown FPS 30 200ml">
-                    <strong>Protetor Solar Sundown FPS 30 200ml</strong>
-                    <span class="price-old">R$ 63,24</span>
-                    <span class="price">R$ 48,09</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 23% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/23zZg8r">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 18 -->
-                <div class="card" data-categories="utensilios">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/E55g1A76FiMs1jt9awLdVxvCx.png" alt="Jogo de Taças Cerveja 300ml – 12 Peças">
-                    <strong>Jogo de Taças Cerveja 300ml – 12 Peças</strong>
-                    <span class="price-old">R$ 78,99</span>
-                    <span class="price">R$ 73,71</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 6% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2j5T2h7">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 19 -->
-                <div class="card" data-categories="beleza">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/dmQcRkuwjnE8uYPs2KAJbgmsm.png" alt="ISDIN Loção Hidratante Corporal Ureadin 10 - 400ml">
-                    <strong>ISDIN Loção Hidratante Corporal Ureadin 10 - 400ml</strong>
-                    <span class="price-old">R$ 109,90</span>
-                    <span class="price">R$ 89,99</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 18% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1RVhs5E">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 20 -->
-                <div class="card" data-categories="bemestar">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/U0dY89L5dJ7b76uHEjtQQpTNo.png" alt="ISDIN Fusion Water FPS 60 Sem Cor">
-                    <strong>ISDIN Fusion Water FPS 60 Sem Cor</strong>
-                    <span class="price-old">R$ 109,90</span>
-                    <span class="price">R$ 89,99</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 18% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1RVhs5E">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 21 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/ofjoLAxECJuftdDYf4Dck8MP0.png" alt="Air Fryer Elgin Start Fry 3,5L">
-                    <strong>Air Fryer Elgin Start Fry 3,5L</strong>
-                    <span class="price-old">R$ 265,99</span>
-                    <span class="price">R$ 199,00</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 25% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2jvrwW8">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 22 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/aHagZHdDNE8whNwZmZKW.png" alt="Air Fryer WAP Family 4L Cinza">
-                    <strong>Air Fryer WAP Family 4L Cinza</strong>
-                    <span class="price-old">R$ 312,86</span>
-                    <span class="price">R$ 224,00</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 28% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2jvrwW8">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 23 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/t0W8cZTFNgt830kisRe2.png" alt="Fritadeira Elétrica Chrome Fry Inox Elgin 8l Airfryer">
-                    <strong>Fritadeira Elétrica Chrome Fry Inox Elgin 8l Airfryer</strong>
-                    <span class="price-old">R$ 437,38</span>
-                    <span class="price">R$ 339,90</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 22% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2tq4KQg">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 24 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/sDahx3KxP2gL3QHxtgFZ.png" alt="Air Fryer WAP Grand Family 5L">
-                    <strong>Air Fryer WAP Grand Family 5L</strong>
-                    <span class="price-old">R$ 498,57</span>
-                    <span class="price">R$ 270,65</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 45% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1iawXDc">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 25 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/tZ4zd0aVhr403GWbG9L2tZCWq.png" alt="Air Fryer Oven Philco 11 Litros">
-                    <strong>Air Fryer Oven Philco 11 Litros</strong>
-                    <span class="price-old">R$ 530,45</span>
-                    <span class="price">R$ 399,00</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 24% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1UL8awh">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 26 -->
-                <div class="card" data-categories="eletro">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/PGo33zFh40UPHd5qy54n.png" alt="Air Fryer Midea Widemax 5,5L">
-                    <strong>Air Fryer Midea Widemax 5,5L</strong>
-                    <span class="price-old">R$ 539,00</span>
-                    <span class="price">R$ 337,90</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 37% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1UL8awh">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 27 -->
-                <div class="card" data-categories="bemestar">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/2XRZstXyNrerRa7iHPZR.png" alt="Balança Digital Good Deals 180kg">
-                    <strong>Balança Digital Good Deals 180kg</strong>
-                    <span class="price-old">R$ 51,13</span>
-                    <span class="price">R$ 35,99</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 29% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1GEwRQb">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 28 -->
-                <div class="card" data-categories="bemestar">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/jJCZU6uTRxH6PLm4G8m9.png" alt="Massageador Muscular Micgeek Portátil">
-                    <strong>Massageador Muscular Micgeek Portátil</strong>
-                    <span class="price-old">R$ 68,00</span>
-                    <span class="price">R$ 40,12</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 41% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1e83wmw">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 29 -->
-                <div class="card" data-categories="bemestar">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/miRtsCE0ue2z2cqX0njF.png" alt="Umidificador Dellamed Umi Pop 2,3L">
-                    <strong>Umidificador Dellamed Umi Pop 2,3L</strong>
-                    <span class="price-old">R$ 139,90</span>
-                    <span class="price">R$ 84,70</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>Oferta com 39% de Desconto!</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/1nT6Fsm">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
-                <!-- PRODUTO 30 -->
-                <div class="card" data-categories="bemestar">
-                    <span class="badge">
-                        <svg class="badge-icon" viewBox="0 0 24 24">
-                            <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
-                        </svg>OFERTA</span>
-                    <img src="images/produtos/bmrph8ELk89mL8GjL4eC.png" alt="Principia Protetor Solar Facial PS-01 FPS 60">
-                    <strong>Principia Protetor Solar Facial PS-01 FPS 60</strong>
-                    <span class="price-old">R$ 55,00</span>
-                    <span class="price">R$ 44,00</span>
-                    <span class="urgency">
-                        <svg class="clock-icon" viewBox="0 0 24 24">
-                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
-                        </svg>20% OFF na 3ª Unidade</span>
-                    <a class="buy" href="https://mercadolivre.com/sec/2z4bxws">
-                    <svg class="cart-icon" viewBox="0 0 24 24">
-                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
-                    </svg>
-                    Comprar com desconto
-                </a>
-                </div>
+        <!-- SEÇÃO DE PRODUTOS -->
+<section>
+    <div class="grid" id="productsGrid">
+        <!-- PRODUTO 1 -->
+        <div class="card" data-categories="utensilios">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/vGrEoCdgYb5peryKRTGFryoKy.png" alt="Panela de Pressão Panelux 4,5L Alumínio Polido">
             </div>
-        </section>
+            <strong>Panela de Pressão Panelux 4,5L Alumínio Polido</strong>
+            <span class="price-old">R$ 71,42</span>
+            <span class="price">R$ 50,57</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta por tempo limitado
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/1bkHDF6">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 2 -->
+        <div class="card" data-categories="utensilios">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/zgm3UBobpoajJNeuYBtFbZyNu.png" alt="Marmita Elétrica Portátil 1,5L Carro e Casa">
+            </div>
+            <strong>Marmita Elétrica Portátil 1,5L Carro e Casa</strong>
+            <span class="price-old">R$ 68,36</span>
+            <span class="price">R$ 53,32</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Pouquíssimas unidades
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/1R5kEvA">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 3 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/e8Cr9WqNwCVvLfhuFUcxft3WN.png" alt="Balança de Cozinha Inox 10kg Alta Precisão">
+            </div>
+            <strong>Balança de Cozinha Inox 10kg Alta Precisão</strong>
+            <span class="price-old">R$ 54,90</span>
+            <span class="price">R$ 26,90</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta especial
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/2UBNj9V">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 4 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/bNuB8ae9XV15g5mbzxzYLokeB.png" alt="Liquidificador Daily Philips Walita Preto, 550W, 110v">
+            </div>
+            <strong>Liquidificador Daily Philips Walita Preto, 550W, 110v</strong>
+            <span class="price-old">R$ 159,90</span>
+            <span class="price">R$ 80,10</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oportunidade!!!
+            </span>
+            <a class="buy" href="https://amzn.to/450Hy1B">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 5 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/msrPKkHbeeYRMs7KW5eoNPmQb.png" alt="Agratto, 783, Chaleira Elétrica, 127v, Preto/Inox">
+            </div>
+            <strong>Agratto, 783, Chaleira Elétrica, 127v, Preto/Inox</strong>
+            <span class="price-old">R$ 69,90</span>
+            <span class="price">R$ 51,90</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Super Oferta!
+            </span>
+            <a class="buy" href="https://amzn.to/4ponFsv">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 6 -->
+        <div class="card" data-categories="utensilios">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/TvAC58xd8UnJ5Jpr77GDkAYVX.png" alt="Frigideira Cerâmica Premium 24cm – Indução & Gás">
+            </div>
+            <strong>Frigideira Cerâmica Premium 24cm – Indução & Gás</strong>
+            <span class="price-old">R$ 78,99</span>
+            <span class="price">R$ 58,99</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 25% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/1hkBGBi">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 7 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/pcV3opuHHiGNxVAoKvCJ1mdKb.png" alt="Forno Elétrico Mondial 52L Grand Family II">
+            </div>
+            <strong>Forno Elétrico Mondial 52L Grand Family II</strong>
+            <span class="price-old">R$ 699,90</span>
+            <span class="price">R$ 399,00</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 42% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/2MshTdT">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 8 -->
+        <div class="card" data-categories="beleza">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/gCvfa4czduAdnmAFT0RAke0wE.png" alt="Aparador Mondial Super Groom 10">
+            </div>
+            <strong>Aparador Mondial Super Groom 10</strong>
+            <span class="price-old">R$ 202,90</span>
+            <span class="price">R$ 110,45</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 45% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/1MrhJKV">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 9 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/KC6KtRR6VhnvKNwvwJECx6r2u.png" alt="Ferro Electrolux Efficient Vapor ESI10">
+            </div>
+            <strong>Ferro Electrolux Efficient Vapor ESI10</strong>
+            <span class="price-old">R$ 109,99</span>
+            <span class="price">R$ 89,90</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 18% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/1MrhJKV">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 10 -->
+        <div class="card" data-categories="bemestar">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/A83fFary05MYi1ENJUrBw7n3y.png" alt="Principia Kit Limpeza + Protetor FPS 60">
+            </div>
+            <strong>Principia Kit Limpeza + Protetor FPS 60</strong>
+            <span class="price-old">R$ 93,00</span>
+            <span class="price">R$ 79,05</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 15% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/2zQHutu">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 11 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/wGNPxYuywwZgEjkhcfman5wx0.png" alt="Micro-ondas Electrolux 20L Branco – Tira Odor">
+            </div>
+            <strong>Micro-ondas Electrolux 20L Branco – Tira Odor</strong>
+            <span class="price-old">R$ 649,00</span>
+            <span class="price">R$ 483,55</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 25% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/1Tsyqt6">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 12 -->
+        <div class="card" data-categories="utensilios">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/KZ4J48wxtwPFiFbgwzqe2qXTp.png" alt="Jogo de Panelas Cerâmica 10 Peças – Indução">
+            </div>
+            <strong>Jogo de Panelas Cerâmica 10 Peças – Indução</strong>
+            <span class="price-old">R$ 399,99</span>
+            <span class="price">R$ 290,58</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 27% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/13vjoat">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 13 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/QvijmgV0Pw4wx6w2vyDtzb1nf.png" alt="Ventilador WAP Flow Turbo 50cm 2 em 1 - 8 pás">
+            </div>
+            <strong>Ventilador WAP Flow Turbo 50cm 2 em 1 - 8 pás</strong>
+            <span class="price-old">R$ 269,90</span>
+            <span class="price">R$ 179,00</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 33% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/2ppaoon">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 14 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/yMvvyrBUMLe24p0NkJoG5YvDQ.png" alt="Aspirador WAP High Speed Plus 3 em 1">
+            </div>
+            <strong>Aspirador WAP High Speed Plus 3 em 1</strong>
+            <span class="price-old">R$ 207,00</span>
+            <span class="price">R$ 139,90</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 32% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/1x397ya">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 15 -->
+        <div class="card" data-categories="bemestar">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/qozny1pmnz5bHeNtgAu4fYKk3.png" alt="Purificador Electrolux PE12G Compacto">
+            </div>
+            <strong>Purificador Electrolux PE12G Compacto</strong>
+            <span class="price-old">R$ 769,00</span>
+            <span class="price">R$ 582,00</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 24% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/2vnkrFi">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- PRODUTO 16 -->
+        <div class="card" data-categories="bemestar">
+            <span class="badge">
+                <svg class="badge-icon" viewBox="0 0 24 24">
+                    <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"></path>
+                </svg>OFERTA
+            </span>
+            <div class="product-image-container">
+                <img src="images/produtos/AzM96RvsoKxbB9bsyMiHB8qYW.png" alt="Piscina Inflável Mor Fun 1400L">
+            </div>
+            <strong>Piscina Inflável Mor Fun 1400L</strong>
+            <span class="price-old">R$ 279,00</span>
+            <span class="price">R$ 159,90</span>
+            <span class="urgency">
+                <svg class="clock-icon" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                </svg>Oferta com 42% de Desconto!
+            </span>
+            <a class="buy" href="https://mercadolivre.com/sec/2DnSCjq">
+                <svg class="cart-icon" viewBox="0 0 24 24">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path>
+                </svg>
+                Comprar com desconto
+            </a>
+        </div>
+
+        <!-- CONTINUAÇÃO DOS PRODUTOS 17-30 (pelo tamanho, vou mostrar o padrão) -->
+        
+        <!-- PRODUTO 17 -->
+        <div class="card" data-categories="bemestar">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/A0LB1zYh5PtZNqsVpy5ZaQw2W.png" alt="Protetor Solar Sundown FPS 30 200ml">
+            </div>
+            <strong>Protetor Solar Sundown FPS 30 200ml</strong>
+            <span class="price-old">R$ 63,24</span>
+            <span class="price">R$ 48,09</span>
+            <span class="urgency">Oferta com 23% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/23zZg8r">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 18 -->
+        <div class="card" data-categories="utensilios">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/E55g1A76FiMs1jt9awLdVxvCx.png" alt="Jogo de Taças Cerveja 300ml – 12 Peças">
+            </div>
+            <strong>Jogo de Taças Cerveja 300ml – 12 Peças</strong>
+            <span class="price-old">R$ 78,99</span>
+            <span class="price">R$ 73,71</span>
+            <span class="urgency">Oferta com 6% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/2j5T2h7">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 19 -->
+        <div class="card" data-categories="beleza">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/dmQcRkuwjnE8uYPs2KAJbgmsm.png" alt="ISDIN Loção Hidratante Corporal Ureadin 10 - 400ml">
+            </div>
+            <strong>ISDIN Loção Hidratante Corporal Ureadin 10 - 400ml</strong>
+            <span class="price-old">R$ 109,90</span>
+            <span class="price">R$ 89,99</span>
+            <span class="urgency">Oferta com 18% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/1RVhs5E">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 20 -->
+        <div class="card" data-categories="bemestar">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/U0dY89L5dJ7b76uHEjtQQpTNo.png" alt="ISDIN Fusion Water FPS 60 Sem Cor">
+            </div>
+            <strong>ISDIN Fusion Water FPS 60 Sem Cor</strong>
+            <span class="price-old">R$ 109,90</span>
+            <span class="price">R$ 89,99</span>
+            <span class="urgency">Oferta com 18% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/1RVhs5E">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 21 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/ofjoLAxECJuftdDYf4Dck8MP0.png" alt="Air Fryer Elgin Start Fry 3,5L">
+            </div>
+            <strong>Air Fryer Elgin Start Fry 3,5L</strong>
+            <span class="price-old">R$ 265,99</span>
+            <span class="price">R$ 199,00</span>
+            <span class="urgency">Oferta com 25% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/2jvrwW8">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 22 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/aHagZHdDNE8whNwZmZKW.png" alt="Air Fryer WAP Family 4L Cinza">
+            </div>
+            <strong>Air Fryer WAP Family 4L Cinza</strong>
+            <span class="price-old">R$ 312,86</span>
+            <span class="price">R$ 224,00</span>
+            <span class="urgency">Oferta com 28% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/2jvrwW8">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 23 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/t0W8cZTFNgt830kisRe2.png" alt="Fritadeira Elétrica Chrome Fry Inox Elgin 8l Airfryer">
+            </div>
+            <strong>Fritadeira Elétrica Chrome Fry Inox Elgin 8l Airfryer</strong>
+            <span class="price-old">R$ 437,38</span>
+            <span class="price">R$ 339,90</span>
+            <span class="urgency">Oferta com 22% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/2tq4KQg">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 24 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/sDahx3KxP2gL3QHxtgFZ.png" alt="Air Fryer WAP Grand Family 5L">
+            </div>
+            <strong>Air Fryer WAP Grand Family 5L</strong>
+            <span class="price-old">R$ 498,57</span>
+            <span class="price">R$ 270,65</span>
+            <span class="urgency">Oferta com 45% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/1iawXDc">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 25 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/tZ4zd0aVhr403GWbG9L2tZCWq.png" alt="Air Fryer Oven Philco 11 Litros">
+            </div>
+            <strong>Air Fryer Oven Philco 11 Litros</strong>
+            <span class="price-old">R$ 530,45</span>
+            <span class="price">R$ 399,00</span>
+            <span class="urgency">Oferta com 24% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/1UL8awh">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 26 -->
+        <div class="card" data-categories="eletro">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/PGo33zFh40UPHd5qy54n.png" alt="Air Fryer Midea Widemax 5,5L">
+            </div>
+            <strong>Air Fryer Midea Widemax 5,5L</strong>
+            <span class="price-old">R$ 539,00</span>
+            <span class="price">R$ 337,90</span>
+            <span class="urgency">Oferta com 37% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/1UL8awh">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 27 -->
+        <div class="card" data-categories="bemestar">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/2XRZstXyNrerRa7iHPZR.png" alt="Balança Digital Good Deals 180kg">
+            </div>
+            <strong>Balança Digital Good Deals 180kg</strong>
+            <span class="price-old">R$ 51,13</span>
+            <span class="price">R$ 35,99</span>
+            <span class="urgency">Oferta com 29% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/1GEwRQb">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 28 -->
+        <div class="card" data-categories="bemestar">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/jJCZU6uTRxH6PLm4G8m9.png" alt="Massageador Muscular Micgeek Portátil">
+            </div>
+            <strong>Massageador Muscular Micgeek Portátil</strong>
+            <span class="price-old">R$ 68,00</span>
+            <span class="price">R$ 40,12</span>
+            <span class="urgency">Oferta com 41% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/1e83wmw">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 29 -->
+        <div class="card" data-categories="bemestar">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/miRtsCE0ue2z2cqX0njF.png" alt="Umidificador Dellamed Umi Pop 2,3L">
+            </div>
+            <strong>Umidificador Dellamed Umi Pop 2,3L</strong>
+            <span class="price-old">R$ 139,90</span>
+            <span class="price">R$ 84,70</span>
+            <span class="urgency">Oferta com 39% de Desconto!</span>
+            <a class="buy" href="https://mercadolivre.com/sec/1nT6Fsm">Comprar com desconto</a>
+        </div>
+
+        <!-- PRODUTO 30 -->
+        <div class="card" data-categories="bemestar">
+            <span class="badge">OFERTA</span>
+            <div class="product-image-container">
+                <img src="images/produtos/bmrph8ELk89mL8GjL4eC.png" alt="Principia Protetor Solar Facial PS-01 FPS 60">
+            </div>
+            <strong>Principia Protetor Solar Facial PS-01 FPS 60</strong>
+            <span class="price-old">R$ 55,00</span>
+            <span class="price">R$ 44,00</span>
+            <span class="urgency">20% OFF na 3ª Unidade</span>
+            <a class="buy" href="https://mercadolivre.com/sec/2z4bxws">Comprar com desconto</a>
+        </div>
+    </div>
+</section>
         <section>
             <h2>Por que confiar no PreçoBomJá?</h2>
             <div class="trust">
