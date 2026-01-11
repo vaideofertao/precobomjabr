@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tire suas dúvidas | PreçoBomJá</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 40px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .welcome-text {
+            color: #7f8c8d;
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        
+        .brand-name {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .friendly-note {
+            background: #e8f4ff;
+            border-left: 4px solid #3498db;
+            padding: 18px 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        
+        .emoji {
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+        
+        .faq-category {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            background: #f8f9fa;
+            color: #2c3e50;
+            padding: 18px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+        }
+        
+        .category-title::before {
+            content: "❓";
+            font-size: 1.3rem;
+        }
+        
+        .faq-item {
+            background: #fdfdfd;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            padding: 0;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+        }
+        
+        .faq-question {
+            padding: 22px 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: #f8fcff;
+        }
+        
+        .faq-question::after {
+            content: "🔽";
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+            color: #3498db;
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: "🔼";
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            border-top: 1px solid transparent;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 25px 25px 25px;
+            max-height: 500px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .highlight {
+            background: #fff9e6;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #e67e22;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        
+        .tip-box {
+            background: #f0f9ff;
+            border: 1px solid #d1ecff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+        
+        .tip-box::before {
+            content: "💡 ";
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .badge {
+            background: #3498db;
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-left: 10px;
+            vertical-align: middle;
+            font-weight: 500;
+        }
+        
+        .new-badge {
+            background: #e74c3c;
+        }
+        
+        .important-badge {
+            background: #2ecc71;
+        }
+        
+        .legal-badge {
+            background: #9b59b6;
+        }
+        
+        .simple-disclaimer {
+            background: #f9f9f9;
+            border: 1px solid #eaeaea;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+            text-align: center;
+        }
+        
+        .contact-email {
+            color: #3498db;
+            font-weight: 600;
+            font-size: 1rem;
+            background: #f0f7ff;
+            padding: 8px 15px;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 5px;
+            text-decoration: none;
+            border: 1px solid #d1ecff;
+        }
+        
+        .contact-email:hover {
+            background: #e1f0ff;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.9rem;
+            }
+            
+            .welcome-text {
+                font-size: 1.05rem;
+            }
+            
+            .faq-question {
+                padding: 18px 20px;
+                font-size: 1.05rem;
+            }
+            
+            .faq-answer {
+                padding: 0 20px;
+                font-size: 1rem;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 0 20px 20px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><span class="emoji">🤔</span> Tire suas dúvidas sobre o <span class="brand-name">PreçoBomJá</span></h1>
+            <p class="welcome-text">Aqui você encontra respostas claras sobre como funciona nossa indicação de ofertas e pode fazer suas compras com mais tranquilidade.</p>
+        </div>
+        
+        <div class="friendly-note">
+            <span class="emoji">💬</span> <strong>Nosso compromisso:</strong> Ser transparentes com você sobre como funciona nossa parceria com as lojas, sempre priorizando sua confiança e segurança.
+        </div>
+        
+        <div class="faq-category">
+            <div class="category-title">Como funciona o PreçoBomJá</div>
+            
+            <!-- PERGUNTA 1 - Mais amigável -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Vocês são uma loja que vende produtos? <span class="badge important-badge">Importante</span></span>
+                </div>
+                <div class="faq-answer">
+                    <p><span class="emoji">🛒</span> <strong>Não, nós não vendemos produtos.</strong> Somos um site que <strong>indica ofertas</strong> de lojas parceiras.</p>
+                    
+                    <p>Funcionamos assim:
+                    <ul>
+                        <li>Encontramos boas ofertas em lojas confiáveis</li>
+                        <li>Indicamos para você através dos nossos links</li>
+                        <li>Você compra <strong>diretamente na loja</strong></li>
+                        <li>A loja cuida de tudo: entrega, garantia, atendimento</li>
+                    </ul>
+                    </p>
+                    
+                    <div class="tip-box">
+                        <strong>Fica tranquilo(a):</strong> Quando você compra através do nosso link, a responsabilidade pela sua compra é <strong>totalmente da loja</strong> onde você fez a compra.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PERGUNTA 2 - Preços de forma amigável -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>O preço pode mudar depois que eu clico no link? <span class="badge new-badge">Dúvida comum</span></span>
+                </div>
+                <div class="faq-answer">
+                    <p><span class="emoji">💰</span> <strong>Pode sim, e isso é normal na internet.</strong></p>
+                    
+                    <p>As ofertas que indicamos são controladas <strong>diretamente pelas lojas</strong>. Elas podem ajustar os preços conforme:</p>
+                    <ul>
+                        <li>Quantidade em estoque</li>
+                        <li>Demanda no momento</li>
+                        <li>Promoções por tempo limitado</li>
+                    </ul>
+                    
+                    <p><span class="highlight">Nosso conselho:</span> Sempre confirme o valor final <strong>na página da loja</strong> antes de finalizar a compra. Assim você não tem surpresas!</p>
+                    
+                    <div class="tip-box">
+                        Essa recomendação vale para qualquer compra online, não apenas para ofertas que indicamos.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PERGUNTA 3 - Responsabilidade explicita -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>O PreçoBomJá tem responsabilidade se algo der errado? <span class="badge important-badge">Importante</span></span>
+                </div>
+                <div class="faq-answer">
+                    <p><span class="emoji">⚖️</span> <strong>Nosso papel é apenas de indicação.</strong></p>
+                    
+                    <p>Como não somos a loja vendedora, <strong>não temos responsabilidade</strong> sobre:
+                    <ul>
+                        <li>Qualidade do produto</li>
+                        <li>Prazo de entrega</li>
+                        <li>Garantia ou defeitos</li>
+                        <li>Trocas e devoluções</li>
+                        <li>Reembolsos</li>
+                    </ul>
+                    </p>
+                    
+                    <div class="tip-box">
+                        <strong>Todas essas questões são resolvidas diretamente com a loja</strong>, seguindo as políticas que ela estabelece para cada compra.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PERGUNTA 4 - Comissões de forma transparente -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Como o PreçoBomJá ganha dinheiro? <span class="badge">Transparência</span></span>
+                </div>
+                <div class="faq-answer">
+                    <p><span class="emoji">🤝</span> <strong>Somos transparentes sobre isso:</strong> Recebemos uma pequena comissão das lojas quando você compra através dos nossos links.</p>
+                    
+                    <p><strong>Importante:</strong> Isso <strong>não aumenta o preço</strong> para você! A comissão já está incluída no que a loja prevê de custos.</p>
+                    
+                    <p>Essa é a nossa única forma de ganhar, e é assim que conseguimos:</p>
+                    <ul>
+                        <li>Manter o site no ar para você</li>
+                        <li>Continuar buscando as melhores ofertas</li>
+                        <li>Investir em segurança e qualidade</li>
+                    </ul>
+                    
+                    <div class="tip-box">
+                        <strong>Win-win:</strong> Você encontra boas ofertas, nós recebemos uma pequena comissão, e as lojas ganham novos clientes. Todo mundo sai ganhando!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="faq-category">
+            <div class="category-title">Dúvidas sobre suas compras</div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>É seguro comprar pelos links do PreçoBomJá? <span class="badge important-badge">Segurança</span></span>
+                </div>
+                <div class="faq-answer">
+                    <p><span class="emoji">🔒</span> <strong>Sim!</strong> Só indicamos lojas parceiras oficiais e confiáveis.</p>
+                    
+                    <p>Para sua maior tranquilidade, recomendamos sempre:
+                    <ul>
+                        <li>Verificar se o site da loja tem "https://" no início do endereço</li>
+                        <li>Conferir as avaliações da loja (quando disponível)</li>
+                        <li>Ler as condições de venda antes de finalizar</li>
+                    </ul>
+                    </p>
+                    
+                    <div class="tip-box">
+                        A segurança da sua compra é responsabilidade da loja onde você compra. Por isso escolhemos apenas lojas confiáveis para indicar.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>E se eu tiver problema com o produto ou entrega?</span>
+                </div>
+                <div class="faq-answer">
+                    <p><span class="emoji">📞</span> Nesse caso, você deve entrar em contato <strong>diretamente com a loja</strong> onde fez a compra.</p>
+                    
+                    <p>Cada loja tem sua própria política para:
+                    <ul>
+                        <li>Prazos de entrega</li>
+                        <li>Garantia do produto</li>
+                        <li>Trocas e devoluções</li>
+                        <li>Atendimento ao cliente</li>
+                    </ul>
+                    </p>
+                    
+                    <p><span class="highlight">Nossa sugestão:</span> Antes de comprar, dê uma olhada nas políticas da loja. Assim você já sabe como funciona caso precise de ajuda depois.</p>
+                    
+                    <div class="tip-box">
+                        Embora a gente não tenha controle sobre como a loja resolve problemas, podemos te ajudar a encontrar o canal de atendimento correto se você precisar.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Como vocês escolhem quais ofertas indicar?</span>
+                </div>
+                <div class="faq-answer">
+                    <p><span class="emoji">⭐</span> <strong>Buscamos qualidade e bom preço!</strong></p>
+                    
+                    <p>Nossa equipe analisa:
+                    <ul>
+                        <li>Preço justo em relação ao produto</li>
+                        <li>Avaliações de quem já comprou</li>
+                        <li>Reputação da loja e da marca</li>
+                        <li>Custo-benefício para você</li>
+                    </ul>
+                    </p>
+                    
+                    <p>Só indicamos o que acreditamos ser uma <strong>boa oportunidade de compra</strong>.</p>
+                </div>
+            </div>
+            
+            <!-- PERGUNTA ADICIONAL - Termos de Uso -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Onde encontro informações mais detalhadas? <span class="badge legal-badge">Legal</span></span>
+                </div>
+                <div class="faq-answer">
+                    <p><span class="emoji">📄</span> Temos uma página completa com nossos <strong>Termos de Uso</strong> que detalham tudo sobre nossa atuação.</p>
+                    
+                    <p>Nessa página você encontra informações completas sobre:
+                    <ul>
+                        <li>Nosso modelo de afiliação</li>
+                        <li>Limites de responsabilidade</li>
+                        <li>Política de privacidade</li>
+                        <li>Como funcionam as parcerias</li>
+                    </ul>
+                    </p>
+                    
+                    <div class="tip-box">
+                        <strong>Recomendamos a leitura dos Termos de Uso</strong> para entender completamente como funciona nossa parceria com você e com as lojas.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="simple-disclaimer">
+            <p><span class="emoji">💙</span> <strong>Ficou com mais alguma dúvida?</strong></p>
+            <p>Entre em contato conosco pelo e-mail:</p>
+            <p>
+                <a href="mailto:contato@precobomjabr.com.br" class="contact-email">
+                    <span class="emoji">✉️</span> contato@precobomjabr.com.br
+                </a>
+            </p>
+            <p style="margin-top: 15px;">Nosso objetivo é que você faça compras seguras e com boa relação custo-benefício.</p>
+            
+            <div style="background: #f0f7ff; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3498db;">
+                <p style="margin: 0; font-size: 0.85rem; color: #2c3e50;">
+                    <strong>Informação importante:</strong> Esta página tem caráter informativo. 
+                    As informações completas sobre responsabilidades e nosso modelo de atuação 
+                    estão detalhadas nos nossos <a href="#" style="color: #3498db; font-weight: 600;">Termos de Uso</a>.
+                </p>
+            </div>
+            
+            <p style="margin-top: 10px; font-size: 0.85rem; color: #666;">
+                O <span class="brand-name">PreçoBomJá</span> atua como afiliado e indica ofertas de lojas parceiras. 
+                Não temos controle sobre preços, estoques ou políticas das lojas indicadas.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Fecha todos os outros itens
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Alterna o item atual
+                    item.classList.toggle('active');
+                });
+            });
+            
+            // Abre a primeira pergunta por padrão
+            if (faqItems.length > 0) {
+                faqItems[0].classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
