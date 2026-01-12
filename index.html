@@ -1859,34 +1859,35 @@
   const installBtn = document.getElementById('pwa-install-btn');
   const closeBtn = document.getElementById('pwa-close');
 
-  // Se já estiver instalado, não mostra
+  // Se já estiver instalado, não mostra o banner
   if (window.matchMedia('(display-mode: standalone)').matches) {
     if (banner) banner.style.display = 'none';
+  } else {
+    // Se NÃO estiver instalado, mostra o banner SEMPRE
+    if (banner) banner.style.display = 'flex';
   }
 
-  // Captura o evento de instalação
+  // Captura o evento de instalação quando o Chrome permitir
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-
-    if (banner) {
-      banner.style.display = 'flex';
-    }
   });
 
   // Clique em instalar
   if (installBtn) {
     installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
 
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted' && banner) {
+          banner.style.display = 'none';
+        }
 
-      if (outcome === 'accepted' && banner) {
-        banner.style.display = 'none';
+        deferredPrompt = null;
+      } else {
+        alert('Para instalar o app, clique nos três pontinhos do navegador e escolha "Instalar app".');
       }
-
-      deferredPrompt = null;
     });
   }
 
@@ -1897,6 +1898,7 @@
     });
   }
 </script>
+
 
 <div id="pwa-install-banner">
   <div class="pwa-text">
