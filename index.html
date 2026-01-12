@@ -865,7 +865,7 @@
             }
         </style>
     </head><body>
-        <header>
+	        <header>
             <div class="header-wrap">
                 <div class="logo">Preço
                     <span>Bom</span>Já</div>
@@ -1854,22 +1854,27 @@
 </script>
 <script>
   let deferredPrompt;
-  const installWrapper = document.getElementById('installAppWrapper');
-  const installBtn = document.getElementById('installApp');
 
-  if (installWrapper) {
-    installWrapper.style.display = 'none';
+  const banner = document.getElementById('pwa-install-banner');
+  const installBtn = document.getElementById('pwa-install-btn');
+  const closeBtn = document.getElementById('pwa-close');
+
+  // Se já estiver instalado, não mostra
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (banner) banner.style.display = 'none';
   }
 
+  // Captura o evento de instalação
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
 
-    if (installWrapper) {
-      installWrapper.style.display = 'block';
+    if (banner) {
+      banner.style.display = 'flex';
     }
   });
 
+  // Clique em instalar
   if (installBtn) {
     installBtn.addEventListener('click', async () => {
       if (!deferredPrompt) return;
@@ -1877,14 +1882,31 @@
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
 
-      if (outcome === 'accepted') {
-        installWrapper.style.display = 'none';
+      if (outcome === 'accepted' && banner) {
+        banner.style.display = 'none';
       }
 
       deferredPrompt = null;
     });
   }
+
+  // Fechar banner manualmente
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      if (banner) banner.style.display = 'none';
+    });
+  }
 </script>
+
+<div id="pwa-install-banner">
+  <div class="pwa-text">
+    📱 <strong>Instale o app PreçoBomJá</strong><br>
+    Acesso rápido às melhores ofertas
+  </div>
+  <button id="pwa-install-btn">Instalar</button>
+  <span id="pwa-close">✕</span>
+</div>
+
 
     
 
